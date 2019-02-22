@@ -7,7 +7,7 @@ A simple web page with a log-in and register page
 - css -> this folder contains all the page styles that are not considered a component
 - logic -> this folder contains all the application logic (e.g. for the login or the register of a user)
 - model -> this folder contains all the Database access methods, im using PDO to access the database
-- - in order to change the connection data for your DBMS modify config.ini
+    - in order to change the connection data for your DBMS modify config.ini
 - view -> this folder contains all the views of the project (e.g. login.php register.php)
 - SQL -> this folder contains all the sql scripts used to create the database where all the users data is stored
 >
