@@ -55,7 +55,7 @@
               Log in
           </div>
       </div>
-      <form id="loginForm" action="index.php?controller=LoginController" method="post">
+      <form id="loginForm" action="login" method="post">
       <div class="row">
           <div class="col">
               <div class="input-group mb-2 txt-dark m-t-10" field="Username">
@@ -97,7 +97,7 @@
       </div>
       </form>
       <div class="row">
-        <form action="index.php?controller=RegisterController" method="post" class="centered">
+        <form action="register" method="post" class="centered">
           <button type="submit" class="text-center link" style="background-color: transparent; border: none;">not a member yet.</button>
         </form>
       </div>

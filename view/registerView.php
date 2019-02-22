@@ -49,7 +49,7 @@
       }
     ?>
     <div class="block"></div>
-    <form action="index.php?controller=RegisterController" method="post" style="padding-right:5vw; padding-left:5vw;">
+    <form action="register" method="post" style="padding-right:5vw; padding-left:5vw;">
     <div class="container row-containment bg-color radius30px block-selection padding" style="margin-top: 5vh; margin-bottom: 5vh; max-width:650px;">
       <div class="row mx-auto text-center">
           <div class="col form-title">

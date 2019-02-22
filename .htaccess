@@ -1,4 +1,4 @@
 Options +FollowSymLinks
 RewriteEngine on
-RewriteRule foldername/(.*)/ filename.php?u=$1
-RewriteRule foldername/(.*) index.php?u=$1
+RewriteRule login index.php?controller=LoginController
+RewriteRule register index.php?controller=RegisterController
