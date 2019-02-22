@@ -1,0 +1,363 @@
+/* file input */
+
+input[type="file"] {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+
+/* date input */
+
+input[type=date]::-webkit-inner-spin-button,
+input[type=date]::-webkit-calendar-picker-indicator {
+    -webkit-appearance: none;
+    display: none;
+}
+
+
+/*@media only screen and (max-width: 576px) {
+    input[type="date"]:before {
+        content: attr(placeholder) !important;
+        margin-right: 0.5em;
+    }
+    input[type="date"]:focus:before,
+    input[type="date"]:valid:before {
+        content: "";
+    }
+}*/
+
+
+/* Button coloring */
+
+.btn-txt-color-light .btn {
+    color: var(--light)!important;
+}
+
+.btn-txt-color-dark .btn {
+    color: var(--dark)!important;
+}
+
+.btn-txt-color-light-hover:hover .btn {
+    color: var(--light)!important;
+}
+
+.btn-txt-color-dark-hover:hover .btn {
+    color: var(--dark)!important;
+}
+
+.btn-color-blue .btn,
+.btn-color-blue .btn:hover {
+    background: var(--blue);
+}
+
+.btn-color-indigo .btn,
+.btn-color-indigo .btn:hover {
+    background: var(--indigo);
+}
+
+.btn-color-purple .btn,
+.btn-color-purple .btn:hover {
+    background: var(--purple);
+}
+
+.btn-color-pink .btn,
+.btn-color-pink .btn:hover {
+    background: var(--pink);
+}
+
+.btn-color-red .btn,
+.btn-color-red .btn:hover {
+    background: var(--red);
+}
+
+.btn-color-orange .btn,
+.btn-color-orange .btn:hover {
+    background: var(--orange);
+}
+
+.btn-color-yellow .btn,
+.btn-color-yellow .btn:hover {
+    background: var(--yellow);
+}
+
+.btn-color-green .btn,
+.btn-color-green .btn:hover {
+    background: var(--green);
+}
+
+.btn-color-teal .btn,
+.btn-color-teal .btn:hover {
+    background: var(--teal);
+}
+
+.btn-color-cyan .btn,
+.btn-color-cyan .btn:hover {
+    background: var(--cyan);
+}
+
+.btn-color-white .btn,
+.btn-color-white .btn:hover {
+    background: var(--white);
+}
+
+.btn-color-gray .btn,
+.btn-color-gray .btn:hover {
+    background: var(--gray);
+}
+
+.btn-color-gray-dark .btn,
+.btn-color-gray-dark .btn:hover {
+    background: var(--gray-dark);
+}
+
+.btn-color-primary .btn,
+.btn-color-primary .btn:hover {
+    background: var(--primary);
+}
+
+.btn-color-secondary .btn,
+.btn-color-secondary .btn:hover {
+    background: var(--secondary);
+}
+
+.btn-color-success .btn,
+.btn-color-success .btn:hover {
+    background: var(--success);
+}
+
+.btn-color-info .btn,
+.btn-color-info .btn:hover {
+    background: var(--info);
+}
+
+.btn-color-warning .btn,
+.btn-color-warning .btn:hover {
+    background: var(--warning);
+}
+
+.btn-color-danger .btn,
+.btn-color-danger .btn:hover {
+    background: var(--danger);
+}
+
+.btn-color-light .btn,
+.btn-color-light .btn:hover {
+    background: var(--light);
+}
+
+.btn-color-dark .btn,
+.btn-color-dark .btn:hover {
+    background: var(--dark);
+}
+
+
+/* colors */
+
+.txt-light {
+    color: var(--light);
+}
+
+.txt-dark {
+    color: var(--dark);
+}
+
+.bg-blue {
+    background: var(--blue);
+}
+
+.bg-indigo {
+    background: var(--indigo);
+}
+
+.bg-purple {
+    background: var(--purple);
+}
+
+.bg-pink {
+    background: var(--pink);
+}
+
+.bg-red {
+    background: var(--red);
+}
+
+.bg-orange {
+    background: var(--orange);
+}
+
+.bg-yellow {
+    background: var(--yellow);
+}
+
+.bg-green {
+    background: var(--green);
+}
+
+.bg-teal {
+    background: var(--teal);
+}
+
+.bg-cyan {
+    background: var(--cyan);
+}
+
+.bg-white {
+    background: var(--white);
+}
+
+.bg-gray {
+    background: var(--gray);
+}
+
+.bg-gray-dark {
+    background: var(--gray-dark);
+}
+
+.bg-primary {
+    background: var(--primary);
+}
+
+.bg-secondary {
+    background: var(--secondary);
+}
+
+.bg-success {
+    background: var(--success);
+}
+
+.bg-info {
+    background: var(--info);
+}
+
+.bg-warning {
+    background: var(--warning);
+}
+
+.bg-danger {
+    background: var(--danger);
+}
+
+.bg-light {
+    background: var(--light);
+}
+
+.bg-dark {
+    background: var(--dark);
+}
+
+.bg-none {
+    background: transparent;
+}
+
+.border-none {
+    border: hidden;
+}
+
+.border-bottom {
+    border-bottom: solid 1.5px var(--gray)!important;
+}
+
+.focused:focus {
+    background: transparent;
+    border-bottom-color: var(--teal)!important;
+    box-shadow: none;
+    border-top-right-radius: 10px!important;
+    border-top-left-radius: 10px!important;
+}
+
+.input-group::before {
+    content: attr(field);
+    position: absolute;
+    top: -7px;
+    left: 40px;
+    font-size: 10px;
+    z-index: 4;
+    visibility: hidden;
+}
+
+.before-visible::before {
+    visibility: visible;
+}
+
+.invalid {
+    border-bottom-color: var(--danger)!important;
+    box-shadow: none;
+}
+
+.invalidIcon {
+    position: absolute;
+    z-index: 10;
+    right: 15px;
+}
+
+.input-group-text {
+    color: inherit!important;
+}
+
+.input-group-prepend {
+    color: inherit!important;
+}
+
+.input-group:focus-within {
+    color: var(--teal)!important;
+}
+
+.marign-width-default {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.size-default {
+    width: 90%;
+}
+
+.btn {
+    box-shadow: none!important;
+}
+
+.row-containment .row {
+    width: 90%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
+
+.custom-file-label::after {
+    content: none!important;
+    visibility: hidden!important;
+}
+
+.form-title {
+    color: #1e1e1e;
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 72px;
+}
+
+
+/* LINKs */
+
+.link {
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #666666;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+}
+
+.link:focus {
+    outline: none !important;
+}
+
+.link:hover {
+    text-decoration: none;
+    color: #00B4DB;
+}

@@ -1,0 +1,59 @@
+.block{
+  position:fixed;
+  float:left;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  display: none;
+}
+.visible{
+  display: unset;
+}
+.hidden{
+  display: none;
+}
+
+.md-select {
+  display: block;
+  padding-bottom: 2px;
+  /*  position: relative;*/
+  min-width: 180px;
+}
+
+.md-select *, .md-select :after, .md-select :before {
+  box-sizing: border-box;
+}
+.md-select ul[role=listbox] {
+  background-color: white;
+  cursor: default;
+  list-style: none;
+  line-height: 26px;
+  overflow: hidden;
+  margin: 0;
+  max-height: 0;
+  position: absolute;
+  padding: 0;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  transition: all 0.15s cubic-bezier(0.35, 0, 0.25, 1);
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
+}
+.md-select ul[role=listbox] li {
+  height: 48px;
+  margin: 0;
+  padding: 10px 16px;
+  outline: none;
+  overflow: hidden;
+}
+.md-select ul[role=listbox] li:focus, .md-select ul[role=listbox] li:hover, .md-select ul[role=listbox] li.active {
+  background: rgba(0, 0, 0, 0.1);
+}
+.md-select.active ul {
+  max-height: 200px;
+  overflow: auto;
+  padding: 8px 0 16px 0px;
+  z-index: 102;
+  transition: all 0.2s ease;
+}

@@ -1,0 +1,11 @@
+.block-selection{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.hide-overflow{
+	overflow: hidden;
+}

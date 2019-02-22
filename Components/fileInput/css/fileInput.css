@@ -1,0 +1,30 @@
+.custom-file-label {
+	/*border-radius: 50px!important;
+	height: auto!important;
+	
+	text-align: center;
+	color: #FFFFFF;
+	border-color: #00B4DB;
+	background: #00B4DB;  /* fallback for old browsers *
+	background: -webkit-linear-gradient(to right, #0083B0, #00B4DB);  /* Chrome 10-25, Safari 5.1-6 *
+	background: linear-gradient(to right, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.custom-file, .custom-file-label{
+	border: hidden;
+	right: auto;
+	left: auto;
+	z-index: auto;
+}
+.custom-file-input{
+	z-index: 1;
+}
+.custom-file:hover .custom-file-label{
+	/*border-color: #0F2027;
+	background: #0F2027;  /* fallback for old browsers *
+	background: -webkit-linear-gradient(to left, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 *
+	background: linear-gradient(to left, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.custom-file-label:after{
+	content: ""!important;
+	visibility: hidden!important;
+}

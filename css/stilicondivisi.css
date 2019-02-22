@@ -1,0 +1,161 @@
+/*light default mode*/
+body{
+    background-color: #FFFFFF!important;
+    color: #000000!important;
+}
+
+.bg-color{background-color: #F7F7F7!important;}
+
+a.bg-color:hover, a.bg-color:focus,
+button.bg-color:hover,
+button.bg-color:focus {
+  background-color: #dae0e5 !important;
+}
+
+.bg-color-inverse{background-color: #616161!important;}
+
+a.bg-color-inverse:hover, a.bg-color-inverse:focus,
+button.bg-color-inverse:hover,
+button.bg-color-inverse:focus {
+  background-color: #424344 !important;
+}
+
+.dropdown-item-custom-styles:hover {background: #87C4C4!important;}
+.dropdown-item-custom-styles:active {background: #405DEF!important;}
+.dropdown-item-custom-styles:focus {background: #5973F7!important;}
+
+.text-color{color: #262626!important;}
+.text-color-inverse{color: #E8E8E8!important;}
+
+.form-control::placeholder {
+    color: #6c757d;
+}
+
+/*STYLES FOR EVERY COLOR MODE*/
+.bg-color-none{
+  background-color: transparent;
+}
+
+/*POSITIONING*/
+.centered { /*mx-auto d-block is the same*/
+    margin: 0 auto;
+}
+
+.right{
+  overflow: hidden;
+}
+
+.right .toRight{
+    float: right;
+}
+
+/*PADDING MARGIN*/
+.padding{
+    padding: 10px;
+}
+
+.margin{
+    margin: 10px;
+}
+
+.margin-height{ /*before it was called margin*/
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.margin-height-sm{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/*GENERAL STYLES*/
+.radius50px{ /*before it was called radius*/
+    border-radius: 50px!important;
+}
+
+.radius-top50px{
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+}
+
+.radius-bottom50px{
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.radius30px{
+    border-radius: 30px;
+}
+
+.radius5px{
+    border-radius: 5px;
+}
+
+.radius50pcent{
+    border-radius: 50%;
+}
+
+/*SPECIFIC ITEM STYLES*/
+.button-large{ /*before it was called loginButton*/
+    position: relative;
+    margin: 25px;
+    margin-top: 10px;
+    padding: 25px;
+}
+
+/*.item-container{ /*before it was called text* deprecated with margin-height and radius30px
+    margin-top: 25px;
+    margin-bottom: 25px;
+    border-radius: 25px;
+}*/
+
+/*.tab-content{ /*unused to remove*
+    border: solid 1px #dee2e6;
+    border-radius: 5px;
+    /*sizing doesn't work properly on every device*
+    height: 50vh; min-height: 250px;
+}*/
+
+.tab-pane-inner{
+    width:95%;
+    text-align: justify;
+}
+
+.carousel_immage_height img{
+    max-height: 500px;
+    height: 50vw;
+}
+
+/* card */
+/*@media screen and (min-width: 576px) { deprecated when removing the card group
+  .card-margin{
+    margin-left: 10px!important;
+    margin-right: 10px!important;
+  }
+}*/
+
+/*.carousel_immage_height img{
+    height: 50vw;
+}
+@media screen and (min-width: 1300px) {
+  .carousel_immage_height img{
+    height: 30vw;
+  }
+}*/
+/*@media screen and (max-height: 900px) {
+    .dim {
+      height: 500px;
+    }
+}
+  
+@media screen and (max-height: 600px) {
+    .dim {
+      height: 250px;
+    }
+}
+  
+@media screen and (max-height: 300px) {
+    .dim {
+        height: 100px;   
+    }
+}*/
