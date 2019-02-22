@@ -12,7 +12,7 @@ class MainController
         if(isset($_GET['action'])){
             $action = $_GET['action'];
         }else{
-            $action = 'visualizza'; //default
+            $action = 'load'; //default
         }
 
         require_once './controller/'.$controller.'.php';

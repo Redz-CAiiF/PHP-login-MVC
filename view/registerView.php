@@ -44,12 +44,12 @@
   </head>
   <body>
     <?php
-      if($popup != ""){
+      if(isset($popup) && $popup != ""){
         echo("<div id='overlay' onclick='closePopup();'><div id='text'>".$popup."</div></div>");
       }
     ?>
     <div class="block"></div>
-    <form action="register.php" method="post" style="padding-right:5vw; padding-left:5vw;">
+    <form action="index.php?controller=RegisterController" method="post" style="padding-right:5vw; padding-left:5vw;">
     <div class="container row-containment bg-color radius30px block-selection padding" style="margin-top: 5vh; margin-bottom: 5vh; max-width:650px;">
       <div class="row mx-auto text-center">
           <div class="col form-title">
@@ -113,9 +113,11 @@
                 <label>Region</label>
                 <ul role="listbox" class="md-whiteframe-z1">
                   <?php
+                  if(isset($provincie)){
                     foreach($provincie as $row){
                       echo '<li>'.$row->nomeProvincia.'</li>';
                     }
+                  }
                   ?>
                 </ul>
               </div><!-- invalid to display wrong data input -->
