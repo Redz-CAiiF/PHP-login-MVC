@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title>exemple</title>
+
+    <script src="../../js/jQuery.js"></script>
+    
+    <!-- customSelect -->
+    <link rel="stylesheet" href="css/customSelect.css">
+    <style>
+      .md-select{
+        /*Demo css do not add to your project*/
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        /*--*/
+      }
+    </style>
+    <script src="js/customSelect.js"></script>
+  </head>
+  <body>
+    <form>
+    <div class="block"></div>
+    <div class="md-select">
+      <input type="text" name="user-region" class="hidden">
+      <label for="user-region"><button type="button" class="ng-binding">State 2</button></label>
+      <ul role="listbox" class="md-whiteframe-z1">
+        <li class="active">Alaska</li>
+        <li>Alabama</li>
+        <li>Arkansas</li>
+        <li>American Samoa</li>
+        <li>Arizona</li>
+        <li>California</li>
+        <li>Colorado</li>
+      </ul>
+    </div>
+    <button name="submit">sub</button>
+    </form>
+  </body>
+</html>

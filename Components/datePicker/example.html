@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>date picker example</title>
+  <style>
+    /*create a font script unified across the various files*/
+    @font-face {font-family: Ubuntu-Regular; src: url('../../fonts/ubuntu/Ubuntu-Regular.ttf');}
+    body{font-family: Ubuntu-Regular;}
+  </style>
+  <link href="../../css/googleButton.css" rel="stylesheet">
+  <script src="../../js/jQuery.js"></script>
+  
+  <!-- START needed references --------------------------------------------------------------------------------->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/material-datetime-picker.css">
+  
+  <script src="https://unpkg.com/babel-polyfill@6.2.0/dist/polyfill.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rome/2.1.22/rome.standalone.js"></script>
+  <script src="js/material-datetime-picker.js" charset="utf-8"></script>
+  <!-- date picker starter script (Need jQuery to work) -->
+  <script>
+    $(document).ready(function(){
+      var picker = new MaterialDatetimePicker({})
+        .on('submit', function(d) {
+          var date = getDateFromPickerFormat((d._d+"").split(" ")); //d._d è la stringa di output
+          document.getElementById('datepicker').innerText = date;
+          document.getElementById('datepicker').val = date;
+        });
+  
+      var el = document.querySelector('#datepicker');
+      el.addEventListener('click', function() {
+        picker.open();
+      }, false);
+    });
+  </script>
+  <!-- END needed references ----------------------------------------------------------------------------------->
+  
+  
+</head>
+  <body>
+    <a class="g-btn" id="datepicker">Open date picker</a>
+  </body>
+</html>
