@@ -14,4 +14,6 @@ A simple web page with a log-in and register page
 - .htaccess -> it is used to prettify the various links (e.g. yourPath/loginBootstrapMinimal/register)
 - index.php -> the first called page when you open the website
 
+```
 Currently i'm separating the various parts of the code. The final product should be in MVC standard (view, controller, router(MainController used to redirect to all other files), model)
+```
