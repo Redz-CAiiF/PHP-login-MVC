@@ -1,0 +1,101 @@
+/*
+ *how to use? just insert the following code in the body
+<div id="cookieBanner">
+  <div class="blocker"></div>
+  <div class="cookies block-selection">
+    <div class="description" id="moreInfo">
+      This website uses cookies to ensure you get the best experience on our website.
+    </div>
+    <div class="button" id="cookieConsent">Got it!</div>
+  </div>
+</div>
+*/
+/* faccio l'import per il block selection cosi da non far selezionare il contenuto del banner
+@import 'generalstyles.css';*/
+.block-selection{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.cookies{
+    z-index: 100!important;
+    position: fixed;
+    right: 1vw;
+    bottom: 1vw;
+    
+    height: 200px;
+    width: 400px;
+    background-color: #000000;
+}
+
+.cookies * {
+    font-family: Helvetica,Calibri,Arial,sans-serif;
+    color: white;
+    
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+}
+
+.cookies .description {
+    height: 70%;
+    width: 90%;
+    font-size: larger;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.cookies .description:hover{
+    transition: color 0.8s ease;
+    color: #D6D1D1;
+}
+
+.cookies .button{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 30%;
+    width: 100%;
+    background-color: #ff6f7e;
+}
+
+.cookies .button:hover{
+    transition: background-color 0.8s ease;
+    background-color: #D65C68;
+}
+
+@media only screen and (max-width: 600px) {
+    .cookies{
+        right: 0vw;
+        bottom: 0vw;
+        height: 200px;
+        width: 100%;
+    }
+}
+
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.blocker{
+    z-index: 99!important;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    background-color: #BFB7B7;
+    opacity: 0.8;
+}
+
+
+.hidden{
+    display: none;
+}
