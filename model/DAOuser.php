@@ -52,57 +52,91 @@ class User{
     }
 }
 
-function getUserByEmail($email, $pathIni){
-    //username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner
-    //SELECT username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner FROM Credential NATURAL JOIN profiledata WHERE email=:email
-    $result =  Database::executeQuery("SELECT username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner FROM Credential NATURAL JOIN profiledata WHERE email=:email", array(new Param(":email",$email)), $pathIni);
+function getUserByEmail($email){
+    $query = "SELECT username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner FROM Credential NATURAL JOIN profiledata WHERE email=:email";
+    $parameters["email"] = $email;
+    
+    $result =  Database::execute($query, $parameters);
     $return = array();
     foreach($result as $row){
-        //($email, $username, $hash, $name, $surname, $provincia, $address, $picture, $birthdate, $description, $banner)
-        //new User($row['username'], $row['email'], $row['hash'], $row['name'], $row['surname'], $row['provincia'], $row['address'], $row['picture'], $row['birthdate'], $row['ageinyears'], $row['description'], $row['banner']);
         array_push($return, new User($row['username'], $row['email'], $row['hash'], $row['name'], $row['surname'], $row['provincia'], $row['address'], $row['picture'], $row['birthdate'], $row['ageinyears'], $row['description'], $row['banner']));
     }
     //print_r($return);
     return $return;
 }
 
-function getUserByUsername($username, $pathIni){
-    //username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner
-    //SELECT username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner FROM Credential NATURAL JOIN profiledata WHERE email=:email
-    $result =  Database::executeQuery("SELECT username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner FROM Credential NATURAL JOIN profiledata WHERE username=:username", array(new Param(":username",$username)), $pathIni);
+function getUserByUsername($username){
+    $query = "SELECT username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner FROM Credential NATURAL JOIN profiledata WHERE username=:username";
+    $parameters["username"] = $username;
+
+    $result = Database::execute($query, $paremeter);
     $return = array();
     foreach($result as $row){
-        //($email, $username, $hash, $name, $surname, $provincia, $address, $picture, $birthdate, $description, $banner)
-        //new User($row['username'], $row['email'], $row['hash'], $row['name'], $row['surname'], $row['provincia'], $row['address'], $row['picture'], $row['birthdate'], $row['ageinyears'], $row['description'], $row['banner']);
         array_push($return, new User($row['username'], $row['email'], $row['hash'], $row['name'], $row['surname'], $row['provincia'], $row['address'], $row['picture'], $row['birthdate'], $row['ageinyears'], $row['description'], $row['banner']));
     }
     return $return;
 }
 
-function getUserByUsernamePassword($username, $password, $pathIni){
-    //username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner
-    //SELECT username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner FROM Credential NATURAL JOIN profiledata WHERE email=:email
-    $result =  Database::executeQuery("SELECT  username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner FROM Credential NATURAL JOIN profiledata WHERE username=:username AND hash=:password", array(new Param(":username",$username), new Param(":password",$password)), $pathIni);
+function getUserByUsernamePassword($username, $password){
+    $query = "SELECT  username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner FROM Credential NATURAL JOIN profiledata WHERE username=:username AND hash=:password";
+    $parameters["username"] = $username;
+    $parameters["password"] = $password;
+
+    $result = Database::execute($query, $parameters);
     $return = array();
     foreach($result as $row){
-        //($email, $username, $hash, $name, $surname, $provincia, $address, $picture, $birthdate, $description, $banner)
-        //new User($row['username'], $row['email'], $row['hash'], $row['name'], $row['surname'], $row['provincia'], $row['address'], $row['picture'], $row['birthdate'], $row['ageinyears'], $row['description'], $row['banner']);
         array_push($return, new User($row['username'], $row['email'], $row['hash'], $row['name'], $row['surname'], $row['provincia'], $row['address'], $row['picture'], $row['birthdate'], $row['ageinyears'], $row['description'], $row['banner']));
 
     }
     return $return;
 }
 
-function insertUser($user, $pathIni){
-    //username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner
-    //SELECT username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner FROM Credential NATURAL JOIN profiledata WHERE email=:email
-    Database::executeQuery("INSERT INTO credential (email,username,hash) VALUES (:email,:username,:hash)", array(new Param(":email",$user->getEmail()), new Param(":username",$user->getUsername()), new Param(":hash",$user->getHash())), $pathIni);
+function insertUser($user){
+    $query = "INSERT INTO credential (email,username,hash) VALUES (:email,:username,:hash)";
+    unset($parameters);
+    $parameters["email"] = $user->getEmail();
+    $parameters["username"] = $user->getUsername();
+    $parameters["hash"] = $user->getHash();
 
-    $user_reg = Database::executeQuery("SELECT codiceProvincia FROM region WHERE nomeProvincia=:provincia", array(new Param(":provincia",$user->provincia)), $pathIni);
-    $user_reg_code = $user_reg[0]["codiceProvincia"];
+    if(Database::execute($query, $parameters)){
 
-    Database::executeQuery("INSERT INTO profiledata (username,name,surname,provincia,address,picture,birthdate,description,banner) VALUES (:username,:name,:surname,:provincia,:address,:picture,:birthdate,:description,:banner)", array(new Param(":username",$user->getUsername()),new Param(":name",$user->name),new Param(":surname",$user->surname),new Param(":provincia",$user_reg_code),new Param(":address",$user->address),new Param(":picture",$user->picture),new Param(":birthdate",$user->birthdate),new Param(":description",$user->description),new Param(":banner",$user->banner) ), $pathIni);
-    return true;
+        $query = "SELECT codiceProvincia FROM region WHERE nomeProvincia=:provincia";
+        unset($parameters);
+        $parameters["provincia"] = $user->provincia;
+
+        $user_reg = Database::execute($query, $parameters);
+        if(count($user_reg)>0){
+            $user_reg_code = $user_reg[0]["codiceProvincia"];
+
+            /*$parameters = array(
+                ["username"] => $user->getUsername(),
+                ["name"] => $user->name,
+                ["surname"] => $user->surname,
+                ["provincia"] => $user_reg_code,
+                ["address"] => $user->address,
+                ["picture"] => $user->picture,
+                ["birthdate"] => $user->birthdate,
+                ["description"] => $user->description,
+                ["banner"] => $user->banner
+            );*/
+
+            $query = "INSERT INTO profiledata (username,name,surname,provincia,address,picture,birthdate,description,banner) VALUES (:username,:name,:surname,:provincia,:address,:picture,:birthdate,:description,:banner)";
+            unset($parameters);
+            $parameters["username"] = $user->getUsername();
+            $parameters["name"] = $user->name;
+            $parameters["surname"] = $user->surname;
+            $parameters["provincia"] = $user_reg_code;
+            $parameters["address"] = $user->address;
+            $parameters["picture"] = $user->picture;
+            $parameters["birthdate"] = $user->birthdate;
+            $parameters["description"] = $user->description;
+            $parameters["banner"] = $user->banner;
+
+            $result = Database::execute($query, $parameters);
+            return $result;
+        }
+    }
+    return false;
 }
 
 ?>

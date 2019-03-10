@@ -1,5 +1,4 @@
 <?php
-$configPath = "./model/config.ini";
 $errorPath = "view/registerView.php";
 $successPath = "success.php";
 $modelProvincie = "model/DAOprovince.php";
@@ -11,7 +10,7 @@ $modelUser = "model/DAOuser.php";
 $popup = "";
 
 require_once $modelProvincie;
-$provincie = getProvinceList($configPath);
+$provincie = getProvinceList();
 
 if(isset($_POST['submit'])){ //se non è null, quindi ha premuto submit dalla pagina precedente
 	session_start();
@@ -39,24 +38,30 @@ if(isset($_POST['submit'])){ //se non è null, quindi ha premuto submit dalla pa
 	$user_birthdate =  $_POST['user-birthdate'];
 	$user_picture =  $_POST['user-picture'];
 	
-	if(count(getUserByEmail($user_email, $configPath)) >= 1){//ho un riscontro qundi esiste gia un utente con quella mail
+	if(count(getUserByEmail($user_email)) >= 1){//ho un riscontro qundi esiste gia un utente con quella mail
 		$popup = 'Mail already used';
 		//include the view
 		include_once ($errorPath);
 	} else {
-		if(count(getUserByUsername($user_name, $configPath)) >= 1){//ho un riscontro qundi esiste gia un utente con quel username
+		if(count(getUserByUsername($user_name)) >= 1){//ho un riscontro qundi esiste gia un utente con quel username
 			$popup = 'Username already used';
 			//include the view
 			include_once ($errorPath);
 		} else {
 			//procedo ad inserire l'utente nel database
-			insertUser(new User($user_username,$user_email,$user_password,$user_name,$user_surname,$user_region,$user_address,$user_picture,$user_birthdate,"","",""), $configPath);
+			$result = insertUser(new User($user_username,$user_email,$user_password,$user_name,$user_surname,$user_region,$user_address,$user_picture,$user_birthdate,"","",""));
 			
 			$_SESSION['username'] = $user_username;
 			$_SESSION['password'] = $user_password;
 			
-			//echo("utente inserito");
-			header("Location: ".$successPath); die();//apre la nuova pagina //mmmmmm not sure about this one here
+			if($result === false){
+				$popup = ':( Something bad happend';
+				//include the view
+				include_once ($errorPath);
+			}else {
+				//echo("utente inserito");
+				header("Location: ".$successPath); die();//apre la nuova pagina
+			}
 		}
 	}
 } else {

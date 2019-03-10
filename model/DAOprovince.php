@@ -29,8 +29,8 @@ class Province{
     }
 }
 
-function getProvinceList($pathIni){
-    $result =  Database::executeQuery("SELECT codiceRegione,nomeRegione,codiceProvincia,inizialiProvincia,nomeProvincia FROM region order by nomeprovincia asc", array(), $pathIni);
+function getProvinceList(){
+    $result =  Database::execute("SELECT codiceRegione,nomeRegione,codiceProvincia,inizialiProvincia,nomeProvincia FROM region order by nomeprovincia asc");
     $return = array();
     foreach($result as $row){
         array_push($return, new Province($row['codiceRegione'],$row['nomeRegione'],$row['codiceProvincia'],$row['inizialiProvincia'],$row['nomeProvincia']));

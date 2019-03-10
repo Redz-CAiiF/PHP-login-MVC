@@ -1,5 +1,4 @@
 <?php
-$configPath = "./model/config.ini";
 $errorPath = "view/loginView.php";
 $successPath = "success.php";
 $modelProvincie = "model/DAOprovince.php";
@@ -17,7 +16,7 @@ if(isset($_POST['submit'])){ //se non è null, quindi ha premuto submit dalla pa
 	$user_username =  $_POST['user-username'];
 	$user_password =  hash('sha256',$_POST['user-password']);
 
-	if(count(getUserByUsernamePassword($user_username, $user_password, $configPath)) == 1){//ho un riscontro
+	if(count(getUserByUsernamePassword($user_username, $user_password)) == 1){//ho un riscontro
 
 		$_SESSION['username'] = $user_username;
 		$_SESSION['password'] = $user_password;
