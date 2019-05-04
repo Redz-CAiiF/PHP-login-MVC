@@ -72,46 +72,6 @@ class User{
     }
 }
 
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ funzione obsoleta, perche non rispetta lo standard per l'oggetto user (è preferibile non usarla per componenti future)
-function insertUserAuto($user){
-    //ottengo il codice della provincia
-    $query = "SELECT codice FROM province WHERE nome=:nome";
-
-    $parameters = array("nome" => $user->provincia);
-    $user_province = Database::execute($query, $parameters);
-    if(count($user_province)>0){
-        $user_province_code = $user_province[0]["codice"];
-
-        //ho ottenuto il codice della provincia, proseguo.
-        $query = "INSERT INTO User(email,username,password,name,surname,provincia,address,picture,birthdate,description,banner) VALUES (:email,:username,:password,:name,:surname,:provincia,:address,:picture,:birthdate,:description,:banner)";
-
-        unset($parameters);
-        $parameters = array(
-            "username" => $user->getUsername(),
-            "email" => $user->getEmail(),
-            "password" => $user->getPassword(),
-            "name" => $user->name,
-            "surname" => $user->surname,
-            "provincia" => $user_province_code,
-            "address" => $user->address,
-            "picture" => $user->picture,
-            "birthdate" => $user->birthdate,
-            "description" => $user->description,
-            "banner" => $user->banner
-        );
-
-        if(Database::execute($query, $parameters)){
-            //ho inserito l'utente
-            return true;
-        }
-        //non ho inserito l'utente
-        return false;
-
-    }
-    //non ho ottenuto la provincia
-    return false;
-}
-
 function insertUser($user){
     //ho ottenuto il codice della provincia, proseguo.
     $query = "INSERT INTO User(email,username,password,name,surname,provincia,address,picture,birthdate,description,banner) VALUES (:email,:username,:password,:name,:surname,:provincia,:address,:picture,:birthdate,:description,:banner)";
