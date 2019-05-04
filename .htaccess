@@ -1,9 +1,4 @@
-Options +FollowSymLinks
-
 RewriteEngine on
 
 RewriteRule login index.php?controller=LoginController
 RewriteRule register index.php?controller=RegisterController
-
-ErrorDocument 403 /error/403.html
-ErrorDocument 404 /error/404.html
