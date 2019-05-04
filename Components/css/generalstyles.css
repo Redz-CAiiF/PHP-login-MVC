@@ -6,6 +6,21 @@
     user-select: none;
 }
 
+.permit-selection{
+    -webkit-touch-callout: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+}
+.permit-selection-all{
+    -webkit-touch-callout: all;
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -moz-user-select: all;
+    user-select: all;
+}
+
 .hide-overflow{
 	overflow: hidden;
 }

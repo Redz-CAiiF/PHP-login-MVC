@@ -8,11 +8,12 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
-    z-index: 2;
+    z-index: 2000;
     cursor: pointer;
     display: block;
 }
 #text{
+    z-index: 2001;
     position: absolute;
     top: 50%;
     left: 50%;

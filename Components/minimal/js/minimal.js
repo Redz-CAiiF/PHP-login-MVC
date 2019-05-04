@@ -67,9 +67,11 @@ function validateField(item) {
             item.parent().parent().prepend("<label class='invalidButton fa fa-exclamation float-icon waves-circle waves-float bg-danger op-0-6 invalidIcon' for=" + item.attr("id") + " onclick='removeItem(this);'></label>");
         }
         event.preventDefault(); //blocco l'invio del form
+        return false;
     } else {
         removeItem(item.parent().parent().find(".invalidButton")); //rimuove tutti gli alert del input box selezionato se il testo e valido
         item.removeClass("invalid");
+        return true;
     }
     //alert("OK");
 }
