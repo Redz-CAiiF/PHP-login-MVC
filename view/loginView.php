@@ -55,7 +55,7 @@
               Log in
           </div>
       </div>
-      <form id="loginForm" action="login" method="post">
+      <form id="loginForm" action="index.php?controller=LoginController&action=check" method="post">
       <div class="row">
           <div class="col">
               <div class="input-group mb-2 txt-dark m-t-10" field="Username">
