@@ -1,14 +1,4 @@
 <?php
-/*class Param
-{
-    public $name;
-    public $value;
-    
-    function __construct($name, $value){
-        $this->name = $name;
-        $this->value = $value;
-    }
-}*/
 
 class Database {
     private static $connection;
@@ -28,26 +18,6 @@ class Database {
         }
         return self::$connection;
     }
-    
-    /*public static function executeQuery($query, $parameter) {
-        try {
-            $db = self::getConnection();
-            
-            $stmt = $db->prepare($query);
-            
-            //binding parameter
-            foreach ($parameter as $param) {
-                $stmt->bindParam($param->name, $param->value, PDO::PARAM_STR);
-            }
-            
-            //executing and returning
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
-        }catch(PDOException $e){
-            echo "Connection failed: " . $e->getMessage();
-        }
-    }*/
 	
 	public static function execute($query, $parameter = null) {
         try {
@@ -72,6 +42,60 @@ class Database {
         }catch(PDOException $e){
             echo "Connection failed: " . $e->getMessage();
         }
+    }
+
+    public static function getTuples($columns = null, $table, $join = null, $data = null, $end = null){
+        $queryStart = "SELECT ";
+        $queryFrom = " FROM ";
+        $queryJoin = "";
+        $queryWhere = "";
+        $queryEnd = "";
+    
+        //Select colums clause creation
+        if ($columns != null) {
+            $colNumber = count($columns);//mumero delle colonne
+            foreach ($columns as $column) {
+                $queryStart = $queryStart." ".$column;
+                $colNumber--;
+                if($colNumber > 0){
+                    $queryStart = $queryStart.", ";
+                }
+            }
+        } else {
+            $queryStart = $queryStart." * "; //tutte le colonne di default
+        }
+    
+        //From clause creation
+        $queryFrom = $queryFrom." ".$table;
+    
+        //Join clause creation
+        $queryJoin = $queryJoin." ".$join;
+    
+        //Where clause creation
+        if ($data != null) {
+            $queryWhere = " WHERE ";
+            $whereBlocks = count($data);
+            //if($whereBlocks)
+            foreach ($data as $key => $param) {
+                $queryWhere = $queryWhere." ".$key."=:".$key;
+                $whereBlocks--;
+                if($whereBlocks > 0){
+                    $queryWhere = $queryWhere." AND";
+                }
+            }
+        }
+
+        //End clause creation
+        $queryEnd = $queryEnd." ".$end;
+
+        //unione dei componenti della query
+        $query = $queryStart." ".$queryFrom." ".$queryJoin." ".$queryWhere." ".$queryEnd;
+    
+        //echo("<br>".$query."<br>");
+    
+        $return = self::execute($query, $data);
+        //print_r($return);
+        return $return;
     }
 	
 }
