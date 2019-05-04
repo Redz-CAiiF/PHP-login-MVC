@@ -6,19 +6,19 @@ class MainController
         if(isset($_GET['controller'])){
             $controller = $_GET['controller'];
         }else{
-            $controller = 'HomeController'; //default
+            $controller = 'LoginController'; //default
         }
 
         if(isset($_GET['action'])){
             $action = $_GET['action'];
         }else{
-            $action = 'load'; //default
+            $action = 'loadPage'; //default
         }
 
-        require_once './controller/'.$controller.'.php';
+        include_once './controller/'.$controller.'.php';
 
         $controller = new $controller();
-        $controller->$action();
+        $controller->$action("");
     }
 }
 
