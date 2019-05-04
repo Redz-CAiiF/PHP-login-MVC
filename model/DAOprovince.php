@@ -3,40 +3,44 @@ require_once "Database.php";
 
 class Province{
     /*
-    +-------------------+--------------+------+-----+---------+-------+
-    | Field             | Type         | Null | Key | Default | Extra |
-    +-------------------+--------------+------+-----+---------+-------+
-    | codiceRegione     | int(11)      | NO   |     | NULL    |       |
-    | nomeRegione       | varchar(100) | NO   |     | NULL    |       |
-    | codiceProvincia   | int(11)      | NO   | PRI | NULL    |       |
-    | inizialiProvincia | varchar(100) | NO   |     | NULL    |       |
-    | nomeProvincia     | varchar(100) | NO   |     | NULL    |       |
-    +-------------------+--------------+------+-----+---------+-------+
+    +----------+--------------+------+-----+---------+-------+
+    | Field    | Type         | Null | Key | Default | Extra |
+    +----------+--------------+------+-----+---------+-------+
+    | Regione  | int(11)      | NO   | MUL | NULL    |       |
+    | codice   | int(11)      | NO   | PRI | NULL    |       |
+    | iniziali | varchar(100) | NO   |     | NULL    |       |
+    | nome     | varchar(100) | NO   |     | NULL    |       |
+    +----------+--------------+------+-----+---------+-------+
     */
 
-    public $codiceRegione;
-    public $nomeRegione;
-    public $codiceProvincia;
-    public $inizialiProvincia;
-    public $nomeProvincia;
+    public $Regione;
+    public $codice;
+    public $iniziali;
+    public $nome;
     
-    function __construct($codiceRegione, $nomeRegione, $codiceProvincia, $inizialiProvincia, $nomeProvincia){
-        $this->codiceRegione = $codiceRegione;
-        $this->nomeRegione = $nomeRegione;
-        $this->codiceProvincia = $codiceProvincia;
-        $this->inizialiProvincia = $inizialiProvincia;
-        $this->nomeProvincia = $nomeProvincia;
+    function __construct($Regione, $codice, $iniziali, $nome){
+        $this->Regione = $Regione;
+        $this->codice = $codice;
+        $this->iniziali = $iniziali;
+        $this->nome = $nome;
     }
 }
 
-function getProvinceList(){
-    $result =  Database::execute("SELECT codiceRegione,nomeRegione,codiceProvincia,inizialiProvincia,nomeProvincia FROM region order by nomeprovincia asc");
-    $return = array();
+function getProvince($parametersValues = null){
+    $queryColums = ["Regione",
+                    "codice",
+                    "iniziali",
+                    "nome"];
+    
+    $queryTable = "Province";
+    $queryEnd = "order by nome asc";
+    
+    $result = Database::getTuples($queryColums, $queryTable, null, $parametersValues, $queryEnd);
+    $provincie = array();
     foreach($result as $row){
-        array_push($return, new Province($row['codiceRegione'],$row['nomeRegione'],$row['codiceProvincia'],$row['inizialiProvincia'],$row['nomeProvincia']));
+        array_push($provincie, new Province($row['Regione'],$row['codice'],$row['iniziali'],$row['nome']));
     }
-    //print_r($return);
-    return $return;
+    return $provincie;
 }
 
 ?>

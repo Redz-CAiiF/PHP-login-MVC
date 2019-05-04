@@ -2,9 +2,29 @@
 require_once "Database.php";
 
 class User{
+
+    /*
+    +-------------+--------------+------+-----+-----------+-------------------+
+    | Field       | Type         | Null | Key | Default   | Extra             |
+    +-------------+--------------+------+-----+-----------+-------------------+
+    | email       | varchar(100) | NO   | UNI | NULL      |                   |
+    | username    | varchar(100) | NO   | PRI | NULL      |                   |
+    | password    | varchar(255) | NO   |     | NULL      |                   |
+    | name        | varchar(100) | NO   |     | NULL      |                   |
+    | surname     | varchar(100) | NO   |     | NULL      |                   |
+    | provincia   | int(11)      | NO   | MUL | NULL      |                   |
+    | address     | varchar(100) | NO   |     | NULL      |                   |
+    | picture     | varchar(300) | NO   |     | NULL      |                   |
+    | birthdate   | date         | NO   |     | curdate() |                   |
+    | ageinyears  | tinyint(4)   | YES  |     | NULL      | VIRTUAL GENERATED |
+    | description | varchar(500) | YES  |     | NULL      |                   |
+    | banner      | varchar(50)  | YES  |     | NULL      |                   |
+    +-------------+--------------+------+-----+-----------+-------------------+
+    */
+
     private $email;
     private $username;
-    private $hash;
+    private $password;
     public $name;
     public $surname;
     public $provincia;
@@ -14,11 +34,11 @@ class User{
     public $birthdate;
     public $description;
     public $banner;
-    
-    function __construct($username, $email, $hash, $name, $surname, $provincia, $address, $picture, $birthdate, $ageinyears, $description, $banner){
+
+    function __construct($username, $email, $password, $name, $surname, $provincia, $address, $picture, $birthdate, $ageinyears, $description, $banner){
         $this->username = $username;
         $this->email = $email;
-        $this->hash = $hash;
+        $this->password = $password;
         $this->name = $name;
         $this->surname = $surname;
         $this->provincia = $provincia;
@@ -44,99 +64,115 @@ class User{
         $this->username = $username;
     }
     
-    public function getHash(){
-        return $this->hash;
+    public function getPassword(){
+        return $this->password;
     }
-    public function setHash($hash){
-        $this->hash = $hash;
+    public function setPassword($hash){
+        $this->password = $hash;
     }
 }
 
-function getUserByEmail($email){
-    $query = "SELECT username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner FROM Credential NATURAL JOIN profiledata WHERE email=:email";
-    $parameters["email"] = $email;
-    
-    $result =  Database::execute($query, $parameters);
-    $return = array();
-    foreach($result as $row){
-        array_push($return, new User($row['username'], $row['email'], $row['hash'], $row['name'], $row['surname'], $row['provincia'], $row['address'], $row['picture'], $row['birthdate'], $row['ageinyears'], $row['description'], $row['banner']));
-    }
-    //print_r($return);
-    return $return;
-}
+///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ funzione obsoleta, perche non rispetta lo standard per l'oggetto user (è preferibile non usarla per componenti future)
+function insertUserAuto($user){
+    //ottengo il codice della provincia
+    $query = "SELECT codice FROM province WHERE nome=:nome";
 
-function getUserByUsername($username){
-    $query = "SELECT username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner FROM Credential NATURAL JOIN profiledata WHERE username=:username";
-    $parameters["username"] = $username;
+    $parameters = array("nome" => $user->provincia);
+    $user_province = Database::execute($query, $parameters);
+    if(count($user_province)>0){
+        $user_province_code = $user_province[0]["codice"];
 
-    $result = Database::execute($query, $paremeter);
-    $return = array();
-    foreach($result as $row){
-        array_push($return, new User($row['username'], $row['email'], $row['hash'], $row['name'], $row['surname'], $row['provincia'], $row['address'], $row['picture'], $row['birthdate'], $row['ageinyears'], $row['description'], $row['banner']));
-    }
-    return $return;
-}
+        //ho ottenuto il codice della provincia, proseguo.
+        $query = "INSERT INTO User(email,username,password,name,surname,provincia,address,picture,birthdate,description,banner) VALUES (:email,:username,:password,:name,:surname,:provincia,:address,:picture,:birthdate,:description,:banner)";
 
-function getUserByUsernamePassword($username, $password){
-    $query = "SELECT  username, email, hash, name, surname, provincia, address, picture, birthdate, ageinyears, description, banner FROM Credential NATURAL JOIN profiledata WHERE username=:username AND hash=:password";
-    $parameters["username"] = $username;
-    $parameters["password"] = $password;
-
-    $result = Database::execute($query, $parameters);
-    $return = array();
-    foreach($result as $row){
-        array_push($return, new User($row['username'], $row['email'], $row['hash'], $row['name'], $row['surname'], $row['provincia'], $row['address'], $row['picture'], $row['birthdate'], $row['ageinyears'], $row['description'], $row['banner']));
-
-    }
-    return $return;
-}
-
-function insertUser($user){
-    $query = "INSERT INTO credential (email,username,hash) VALUES (:email,:username,:hash)";
-    unset($parameters);
-    $parameters["email"] = $user->getEmail();
-    $parameters["username"] = $user->getUsername();
-    $parameters["hash"] = $user->getHash();
-
-    if(Database::execute($query, $parameters)){
-
-        $query = "SELECT codiceProvincia FROM region WHERE nomeProvincia=:provincia";
         unset($parameters);
-        $parameters["provincia"] = $user->provincia;
+        $parameters = array(
+            "username" => $user->getUsername(),
+            "email" => $user->getEmail(),
+            "password" => $user->getPassword(),
+            "name" => $user->name,
+            "surname" => $user->surname,
+            "provincia" => $user_province_code,
+            "address" => $user->address,
+            "picture" => $user->picture,
+            "birthdate" => $user->birthdate,
+            "description" => $user->description,
+            "banner" => $user->banner
+        );
 
-        $user_reg = Database::execute($query, $parameters);
-        if(count($user_reg)>0){
-            $user_reg_code = $user_reg[0]["codiceProvincia"];
-
-            /*$parameters = array(
-                ["username"] => $user->getUsername(),
-                ["name"] => $user->name,
-                ["surname"] => $user->surname,
-                ["provincia"] => $user_reg_code,
-                ["address"] => $user->address,
-                ["picture"] => $user->picture,
-                ["birthdate"] => $user->birthdate,
-                ["description"] => $user->description,
-                ["banner"] => $user->banner
-            );*/
-
-            $query = "INSERT INTO profiledata (username,name,surname,provincia,address,picture,birthdate,description,banner) VALUES (:username,:name,:surname,:provincia,:address,:picture,:birthdate,:description,:banner)";
-            unset($parameters);
-            $parameters["username"] = $user->getUsername();
-            $parameters["name"] = $user->name;
-            $parameters["surname"] = $user->surname;
-            $parameters["provincia"] = $user_reg_code;
-            $parameters["address"] = $user->address;
-            $parameters["picture"] = $user->picture;
-            $parameters["birthdate"] = $user->birthdate;
-            $parameters["description"] = $user->description;
-            $parameters["banner"] = $user->banner;
-
-            $result = Database::execute($query, $parameters);
-            return $result;
+        if(Database::execute($query, $parameters)){
+            //ho inserito l'utente
+            return true;
         }
+        //non ho inserito l'utente
+        return false;
+
     }
+    //non ho ottenuto la provincia
     return false;
 }
 
+function insertUser($user){
+    //ho ottenuto il codice della provincia, proseguo.
+    $query = "INSERT INTO User(email,username,password,name,surname,provincia,address,picture,birthdate,description,banner) VALUES (:email,:username,:password,:name,:surname,:provincia,:address,:picture,:birthdate,:description,:banner)";
+
+    unset($parameters);
+    $parameters = array(
+        "username" => $user->getUsername(),
+        "email" => $user->getEmail(),
+        "password" => $user->getPassword(),
+        "name" => $user->name,
+        "surname" => $user->surname,
+        "provincia" => $user->provincia,
+        "address" => $user->address,
+        "picture" => $user->picture,
+        "birthdate" => $user->birthdate,
+        "description" => $user->description,
+        "banner" => $user->banner
+    );
+
+    if(Database::execute($query, $parameters)){
+        //ho inserito l'utente
+        return true;
+    }
+    //non ho inserito l'utente
+    return false;
+}
+
+
+function getUsers($parametersValues){
+    $queryColums = ["username",
+                    "email",
+                    "password",
+                    "name",
+                    "surname",
+                    "provincia",
+                    "address",
+                    "picture",
+                    "birthdate",
+                    "ageinyears",
+                    "description",
+                    "banner"];
+    
+    $queryTable = "user";
+    
+    $result = Database::getTuples($queryColums, $queryTable, null, $parametersValues, null);
+    $users = array();
+    foreach($result as $row){
+        array_push($users, new User($row['username'], $row['email'], $row['password'], $row['name'], $row['surname'], $row['provincia'], $row['address'], $row['picture'], $row['birthdate'], $row['ageinyears'], $row['description'], $row['banner']));
+    }
+    return $users;
+}
+
+
+/*$values = array(
+    'username'=>'admin',
+    'password'=>'5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8'
+    );
+
+echo("chiamo la fx<br>");
+print_r(getUsers($values));
+
+echo("<br>inserisco l'utente<br>");
+echo(insertUser(new User('username', 'email', 'password', 'name', 'surname', '27', 'address', 'picture', '2000-01-01', 'ageinyears', 'description', 'banner')));*/
 ?>

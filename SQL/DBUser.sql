@@ -2,8 +2,7 @@ DROP DATABASE IF EXISTS DBUser;
 CREATE DATABASE  IF NOT EXISTS DBUser;
 USE DBUser;
 
--- INSERT INTO Credential values ('admin@admin.admin','admin','5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8');
--- INSERT INTO profileData (username,name,surname,provincia,address,picture,birthdate,description,banner) values ('admin','admin','admin','27','via admin 55','mypicture.jpg','2000/01/01','im the admin','u must do what i want');
+--INSERT INTO User(email,username,password,name,surname,provincia,address,picture,birthdate,description,banner) VALUES ('admin@admin.admin','admin','5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8','admin','admin','27','via admin 55','mypicture.jpg','2000/01/01','im the admin','u must do what i want');
 
 CREATE TABLE Region (
 		codice INT NOT NULL,
