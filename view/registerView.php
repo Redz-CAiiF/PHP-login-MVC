@@ -103,14 +103,34 @@
           </div>
       </div>
       <div class="row">
-          <div class="col-12 col-md-6">
+      <div class="col-12 col-md-6">
             <div class="input-group mb-2 txt-dark m-t-10" field="Region">
               <div class="input-group-prepend">
-                <div class="input-group-text radius-50 bg-none border-none"><label class="fas fa-map flat-icon"></label></div>
+                <div class="input-group-text radius-50 bg-none border-none"><label class="fas fa-map-marked-alt flat-icon"></label></div>
               </div>
-              <input type="select" name="user-region" id="md-select-input" class="hidden validate">
+              <input type="select" id="user-region" class="hidden">
               <div class="md-select form-control radius-0 bg-none border-none border-bottom focused">
                 <label>Region</label>
+                <ul role="listbox" class="md-whiteframe-z1">
+                  <?php
+                  if(isset($region)){
+                    foreach($region as $row){
+                      echo '<li>'.$row->nome.'</li>';
+                    }
+                  }
+                  ?>
+                </ul>
+              </div><!-- invalid to display wrong data input -->
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="input-group mb-2 txt-dark m-t-10" field="Province">
+              <div class="input-group-prepend">
+                <div class="input-group-text radius-50 bg-none border-none"><label class="fas fa-map-marker-alt flat-icon"></label></div>
+              </div>
+              <input type="select" name="user-province" id="user-province" class="hidden validate">
+              <div class="md-select form-control radius-0 bg-none border-none border-bottom focused">
+                <label>Province</label>
                 <ul role="listbox" class="md-whiteframe-z1">
                   <?php
                   if(isset($provincie)){
@@ -123,14 +143,16 @@
               </div><!-- invalid to display wrong data input -->
             </div>
           </div>
-          <div class="col-12 col-md-6">
-              <div class="input-group mb-2 txt-dark m-t-10" field="Address">
-                <div class="input-group-prepend">
-                  <div class="input-group-text radius-50 bg-none border-none"><label class="fas fa-map-marker-alt flat-icon"></label></div>
-                </div>
-                <input type="address" class="form-control radius-0 bg-none border-none border-bottom focused validate" id="user-address" name="user-address" placeholder="Address" data-toggle="tooltip" data-placement="bottom" title="via nomeVia, numero"> <!-- invalid to display wrong data input -->
-              </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="input-group mb-2 txt-dark m-t-10" field="Address">
+            <div class="input-group-prepend">
+              <div class="input-group-text radius-50 bg-none border-none"><label class="fas fa-road flat-icon"></label></div>
+            </div>
+            <input type="address" class="form-control radius-0 bg-none border-none border-bottom focused validate" id="user-address" name="user-address" placeholder="Address" data-toggle="tooltip" data-placement="bottom" title="via nomeVia, numero"> <!-- invalid to display wrong data input -->
           </div>
+        </div>
       </div>
       <div class="row">
           <div class="col-12 col-md-6">
@@ -147,7 +169,7 @@
                   <div class="input-group-text radius-50 bg-none border-none"><label class="fa fa-folder flat-icon"></label></div>
                 </div>
                 <input type="file" class="custom-file-input validate" id="user-picture" name="user-picture">
-                <label id="user-picture-label" class="custom-file-label form-control radius-0 bg-none border-none border-bottom focused hide-overflow" for="user-picture">Choose file</label> <!-- invalid to display wrong data input -->
+                <label id="user-picture-label" class="custom-file-label form-control radius-0 bg-none border-none border-bottom focused hide-overflow" for="user-picture">Picture (Choose file)</label> <!-- invalid to display wrong data input -->
             </div>
           </div>
       </div>
@@ -177,8 +199,51 @@
     </div>
     <!-- end content -->
     <script type="text/javascript">
+
+
+
       $("form").submit(function( event ) {
         $(".validate").each(function(){ validateField($(this)); });
+      });
+
+      //al click del form delle regioni
+      function selectMenu(){
+        $("#user-region").siblings('.md-select').children("ul").children("li").on('click', function() {
+          //apsetto del tempo per far eseguire le funzioni che inseriscono il valore del dropdown
+          setTimeout(() => {
+            //chiamata ajax per aggiornare le provincie
+            $.post("index.php?controller=registerController&action=getRequiredRegions",
+              {
+                  regione: $("#user-region").val(),
+              },
+              function (data, status) {
+                //ottengo i dati in json
+                //console.log(data);
+                let temp = data.match(new RegExp("registerController(.*)registerController"));
+                data = temp!==null?temp[1]:null;//data viene persa con l'override
+
+                if(data!==null){
+                  var provincie = JSON.parse(data);
+                  //svuoto la lista
+                  console.log(provincie);
+                  var lista = $("#user-province").siblings('.md-select').children("ul");
+                  $("#user-province").val("");
+                  $("#user-province").siblings('.md-select').children("label").text("Province");
+                  lista.empty();
+                  //gli inserisco nella lista
+                  provincie.forEach(element => {
+                    lista.append('<li>'+element.nome+'</li>');
+                  });
+                }
+              });
+          }, 10);
+        });
+      }
+
+      //rifaccio il bind della funzione del dropdown menu perche viene persa con l'unbind della classe generale in components
+      selectMenu();
+      $(document).ajaxComplete (function(){
+        selectMenu();
       });
     </script>
   </body>
