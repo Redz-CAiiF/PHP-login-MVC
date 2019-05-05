@@ -1,4 +1,5 @@
 .block{
+  z-index: 100;
   position:fixed;
   float:left;
   top:0;
